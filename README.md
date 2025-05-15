@@ -1,69 +1,107 @@
 # Web Scraping Projects
 
-This repository contains three different web scraping projects built using Scrapy and Selenium. Each project targets a different e-commerce website and extracts product data such as SKU, name, price, images, specifications, and more.
+This repository contains three web scraping scripts targeting different e-commerce websites. The tools used include Scrapy and Selenium (with undetected-chromedriver).
 
 ---
 
-## 1. `ascolor_spider.py`
+## 📁 Project Structure
 
-**Target Website:** [ascolour.co.nz](https://www.ascolour.co.nz)  
-**Framework:** Scrapy
-
-### Features:
-- Logs in using a POST request and handles authentication.
-- Parses product sitemap to gather product URLs.
-- Extracts comprehensive product details:
-  - SKU, name, description, price, tiered pricing
-  - Feature and gallery images mapped to color variations
-  - Category tags and product properties
-- Parses embedded JavaScript JSON for color and image mapping.
+```
+.
+├── ascolour_spider/
+│   └── ascolor_spider.py
+├── com1_spider/
+│   └── com1_spider.py
+├── euspares_scraper/
+│   └── eusp_selenium_scraper.py
+└── scrapy.cfg
+```
 
 ---
 
-## 2. `com1_spider.py`
+## 🕷️ 1. ASColour Spider
 
-**Target Website:** [com1.com.au](https://www.com1.com.au)  
-**Framework:** Scrapy
+**Script Path:** `ascolour_spider/ascolor_spider.py`  
+**Framework:** Scrapy  
+**Target:** [ascolour.co.nz](https://www.ascolour.co.nz)
 
-### Features:
-- Logs in using credentials stored in `scrapy.cfg`.
-- Navigates through product categories and subcategories.
-- Extracts detailed product data:
+### Features
+- Logs in via POST request
+- Parses sitemap for product URLs
+- Extracts:
+  - SKU, name, price, tiered pricing
+  - Gallery and feature images mapped to colors
+  - Description, categories, properties
+
+### Run Command
+```bash
+cd ascolour_spider
+scrapy crawl ascolor
+```
+
+---
+
+## 🕷️ 2. Com1 Spider
+
+**Script Path:** `com1_spider/com1_spider.py`  
+**Framework:** Scrapy  
+**Target:** [com1.com.au](https://www.com1.com.au)
+
+### Features
+- Logs in using credentials from `scrapy.cfg`
+- Navigates categories and extracts:
   - Name, SKU, price, availability
-  - Manufacturer part number, specifications
-  - Weight and dimensions (with unit normalization)
-  - Product and thumbnail image URLs
+  - Manufacturer number, weight, dimensions
+  - Specifications and images
+
+### Run Command
+```bash
+cd com1_spider
+scrapy crawl com_1
+```
+
+> ⚠️ Make sure your credentials are set correctly in `scrapy.cfg`.
 
 ---
 
-## 3. `eusp_selenium_scraper.py`
+## 🖱️ 3. EUspares Selenium Scraper
 
-**Target Website:** [euspares.co.uk](https://www.euspares.co.uk)  
-**Framework:** Selenium + `undetected-chromedriver` + Requests + Scrapy Selectors
+**Script Path:** `euspares_scraper/eusp_selenium_scraper.py`  
+**Framework:** Selenium (`undetected-chromedriver`) + Requests + Scrapy selectors  
+**Target:** [euspares.co.uk](https://www.euspares.co.uk)
 
-### Features:
-- Uses undetected ChromeDriver to bypass bot protection.
-- Authenticates via browser session and captures cookies.
-- Scrapes data using `requests` and Scrapy selectors on rendered HTML.
-- Extracts and saves:
-  - Category name and URL
-  - Product title, subtitle, description
-  - Image URLs, price, vehicle compatibility, brand, OE part number
-- Outputs data to CSV (`vika.csv`) under the `all_brands/` folder.
+### Features
+- Uses undetected ChromeDriver for login bypass
+- Scrapes data using Requests + Scrapy Selectors
+- Extracts:
+  - Title, subtitle, description
+  - Price, brand, OE number, compatibility
+  - Category, image URLs
+
+### Run Command
+```bash
+cd euspares_scraper
+python eusp_selenium_scraper.py
+```
+
+> Output is saved to `all_brands/vika.csv`.
 
 ---
 
-## Setup & Usage
+## 📦 Installation
 
-### Install Dependencies
+Install all dependencies:
+
 ```bash
 pip install scrapy selenium undetected-chromedriver pandas clean-text
+```
 
-Run Spiders:
+---
 
-Scrapy Spiders:
-scrapy crawl ascolor
-scrapy crawl com_1
+## ✅ Notes
 
-Selenium Script:
-python eusp.py
+- Ensure proper credentials are configured for login-required spiders.
+- Folder structure and paths must be followed as shown above.
+- Outputs are saved in CSV or as JSON, depending on the script.
+
+---
